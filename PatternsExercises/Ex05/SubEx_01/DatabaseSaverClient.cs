@@ -7,7 +7,11 @@ namespace Patterns.Ex05.SubEx_01
         public void Main(bool b)
         {
             var databaseSaver = new DatabaseSaver();
-            DoSmth(databaseSaver);
+
+            IDatabaseSaver saverWithMail = new MailSenderDatabaseSaverDecorator(databaseSaver, "meow");
+            IDatabaseSaver cacheSaver = new CacheUpdaterDatabaseSaverDecorator(saverWithMail);
+            
+            DoSmth(saverWithMail);
         }
 
         private void DoSmth(IDatabaseSaver saver)
